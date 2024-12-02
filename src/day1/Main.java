@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Main {
@@ -25,9 +24,8 @@ public class Main {
                 }
 
                 String[] partes = linha.trim().split("\\s+");
-       
+
                 if (partes.length >= 2) {
-                   
                     for (int i = 0; i < partes.length / 2; i++) {
                         try {
                             lista1.add(Integer.parseInt(partes[i]));
@@ -36,7 +34,6 @@ public class Main {
                         }
                     }
 
-                  
                     for (int i = partes.length / 2; i < partes.length; i++) {
                         try {
                             lista2.add(Integer.parseInt(partes[i]));
@@ -50,21 +47,24 @@ public class Main {
             }
 
             br.close();
-            
-            if (lista1.size() != lista2.size()) {
-                System.out.println("As listas devem ter o mesmo tamanho.");
+
+            if (lista1.isEmpty() || lista2.isEmpty()) {
+                System.out.println("As listas estão vazias.");
                 return;
             }
 
-            Collections.sort(lista1);
-            Collections.sort(lista2);
-
-            int somaDistancias = 0;
-            for (int i = 0; i < lista1.size(); i++) {
-                somaDistancias += Math.abs(lista1.get(i) - lista2.get(i));
+            int somaMultiplicada = 0;
+            for (int num1 : lista1) {
+                int contador = 0;
+                for (int num2 : lista2) {
+                    if (num1 == num2) {
+                        contador++;
+                    }
+                }
+                somaMultiplicada += num1 * contador;
             }
 
-            System.out.println("A soma das distâncias absolutas é: " + somaDistancias);
+            System.out.println("A soma dos produtos é: " + somaMultiplicada);
 
         } catch (IOException e) {
             System.out.println("Erro ao ler o arquivo: " + e.getMessage());
